@@ -11,24 +11,36 @@ import java.util.stream.Collectors;
 /**
  * Created by Edwin on 5/18/2015.
  */
-public class ComponentEntitySystem {
+public class ComponentEntitySystem implements Updateable, Renderable{
     private List<System> systems = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
 
     private HashMap<System, List<Entity>> organizedEntities = new HashMap<>();
 
-    public void update(GameContainer container, int delta){
+    @Override
+    public void render(GameContainer gc, Graphics g) {
+        organizedEntities.forEach((system, relevantEntities) -> system.render(relevantEntities, gc, g));
+    }
+
+    @Override
+    public void update(GameContainer gc, int dt) {
         organizedEntities.clear();
         systems.forEach(system ->{
             organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.acceptedComponents)).collect(Collectors.toCollection(ArrayList::new)));
         });
-
-        organizedEntities.forEach((system, relevantEntities) -> system.update(relevantEntities, container, delta));
+        organizedEntities.forEach((system, relevantEntities) -> system.update(relevantEntities, gc, dt));
     }
 
-    public void render(GameContainer container, Graphics g){
-        organizedEntities.forEach((system, relevantEntities) -> system.render(relevantEntities, container, g));
+    public void addSystem(System system){
+        systems.add(system);
     }
+
+    public void addEntity(Entity e){
+        entities.add(e);
+    }
+
+
+
 
     public abstract class System{
         private List<Class<Component>> acceptedComponents;

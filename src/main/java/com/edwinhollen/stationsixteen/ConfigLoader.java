@@ -1,7 +1,6 @@
 package com.edwinhollen.stationsixteen;
 
 import com.google.gson.Gson;
-import com.sun.istack.internal.NotNull;
 
 import java.io.*;
 import java.nio.file.Files;

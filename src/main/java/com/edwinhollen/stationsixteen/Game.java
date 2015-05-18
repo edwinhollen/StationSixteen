@@ -35,7 +35,6 @@ public class Game extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
 
-
     }
 
     @Override

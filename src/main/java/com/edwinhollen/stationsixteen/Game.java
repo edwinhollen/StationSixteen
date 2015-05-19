@@ -24,7 +24,7 @@ public class Game extends BasicGame {
     private Scene currentScene;
 
     public Game() throws SlickException {
-        super("A Slick2d game");
+        super("Station Sixteen");
         this.config = ConfigLoader.load(Paths.get(CONFIG_PATH.toString(), "config.json"), true);
 
         AppGameContainer app = new AppGameContainer(this);

@@ -1,5 +1,7 @@
-package com.edwinhollen.stationsixteen;
+package com.edwinhollen.stationsixteen.systems;
 
+import com.edwinhollen.stationsixteen.ComponentEntitySystem;
+import com.edwinhollen.stationsixteen.EntitiesUpdateable;
 import com.edwinhollen.stationsixteen.components.PhysicsComponent;
 import com.edwinhollen.stationsixteen.components.PositionComponent;
 import org.newdawn.slick.GameContainer;

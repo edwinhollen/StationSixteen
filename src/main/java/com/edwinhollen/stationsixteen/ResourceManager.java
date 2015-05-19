@@ -21,6 +21,7 @@ public class ResourceManager {
     private static Image loadImage(String imageFilename){
         try {
             loadedImages.put(imageFilename, new Image(imageFilename));
+            loadedImages.get(imageFilename).setFilter(Image.FILTER_NEAREST);
             return loadedImages.get(imageFilename);
         } catch (SlickException e) {
             e.printStackTrace();
@@ -34,5 +35,17 @@ public class ResourceManager {
         }catch(NullPointerException e){
             return null;
         }
+    }
+
+    public static void cleanAllResources(){
+        // clean images
+        loadedImages.entrySet().parallelStream().forEach(entry ->{
+            try {
+                entry.getValue().destroy();
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            loadedImages.remove(entry.getKey(), entry.getValue());
+        });
     }
 }

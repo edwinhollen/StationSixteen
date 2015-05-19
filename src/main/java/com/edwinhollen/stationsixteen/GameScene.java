@@ -19,12 +19,13 @@ public class GameScene extends Scene {
 		ces.addSystem(new PhysicsSystem());
 		ces.addSystem(new RenderSystem());
 
-	    ComponentEntitySystem.Entity e = new ComponentEntitySystem.Entity();
-	    e.addComponent(new PhysicsComponent());
-        e.addComponent(new PositionComponent());
-		e.addComponent(new ImageComponent("bluesky.png"));
-
-	    ces.addEntity(e);
+		for(int i = 0; i < 1000; i++){
+			ComponentEntitySystem.Entity e = new ComponentEntitySystem.Entity();
+			e.addComponent(new PositionComponent());
+			e.addComponent(new PhysicsComponent(Math.random()*0.02, Math.random()*0.02));
+			e.addComponent(new ImageComponent("character_idle.png"));
+			ces.addEntity(e);
+		}
 
     }
 

@@ -27,8 +27,8 @@ public class PhysicsSystem extends ComponentEntitySystem.System implements Entit
 			PhysicsComponent phys = (PhysicsComponent) entity.getComponentByClass(PhysicsComponent.class);
 			PositionComponent pos = (PositionComponent) entity.getComponentByClass(PositionComponent.class);
 
-			pos.x += phys.velocityX;
-			pos.y += phys.velocityY;
+			pos.x += (phys.velocityX * dt);
+			pos.y += (phys.velocityY * dt);
 		});
 	}
 }

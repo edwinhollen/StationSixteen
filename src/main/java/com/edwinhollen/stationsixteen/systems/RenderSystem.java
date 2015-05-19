@@ -25,7 +25,7 @@ public class RenderSystem extends ComponentEntitySystem.System implements Entiti
     }
     @Override
     public void render(List<ComponentEntitySystem.Entity> entities, GameContainer gc, Graphics g) {
-        entities.parallelStream().forEach(entity ->{
+        entities.stream().forEach(entity ->{
             PositionComponent pos = (PositionComponent) entity.getComponentByClass(PositionComponent.class);
             Image imageToDraw = null;
             try{
@@ -39,7 +39,7 @@ public class RenderSystem extends ComponentEntitySystem.System implements Entiti
 
             if(Objects.isNull(imageToDraw)) return;
 
-            g.drawImage(imageToDraw, (float) pos.x, (float) pos.y);
+            g.drawImage(imageToDraw, Math.round(pos.x), Math.round(pos.y));
 
         });
     }

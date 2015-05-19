@@ -29,7 +29,7 @@ public class ComponentEntitySystem implements Updateable, Renderable{
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		organizedEntities.entrySet().parallelStream().forEach(entry -> {
+		organizedEntities.entrySet().stream().forEach(entry -> {
             if (entry.getKey() instanceof EntitiesRenderable)
                 ((EntitiesRenderable) entry.getKey()).render(entry.getValue(), gc, g);
         });
@@ -44,7 +44,7 @@ public class ComponentEntitySystem implements Updateable, Renderable{
                 organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.getAcceptedComponents())).collect(Collectors.toCollection(ArrayList::new)));
             });
         }
-		organizedEntities.entrySet().parallelStream().forEach(entry -> {
+		organizedEntities.entrySet().stream().forEach(entry -> {
             if (entry.getKey() instanceof EntitiesUpdateable)
                 ((EntitiesUpdateable) entry.getKey()).update(entry.getValue(), gc, dt);
         });

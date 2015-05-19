@@ -8,11 +8,11 @@ import java.util.List;
  */
 public class Animation {
     public final List<String> frames;
-    public final boolean loops;
+    public final boolean loop;
     public final int delay;
-    public Animation(List<String> frames, int delay, boolean loops){
+    public Animation(List<String> frames, int delay, boolean loop){
         this.frames = frames;
         this.delay = delay;
-        this.loops = loops;
+        this.loop = loop;
     }
 }

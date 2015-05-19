@@ -19,7 +19,7 @@ public class GameScene extends Scene {
 		ces.addSystem(new PhysicsSystem());
 		ces.addSystem(new RenderSystem());
 
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 100; i++){
 			ComponentEntitySystem.Entity e = new ComponentEntitySystem.Entity();
 			e.addComponent(new PositionComponent());
 			e.addComponent(new PhysicsComponent(Math.random()*0.02, Math.random()*0.02));

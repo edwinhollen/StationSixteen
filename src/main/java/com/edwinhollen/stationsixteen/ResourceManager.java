@@ -1,8 +1,16 @@
 package com.edwinhollen.stationsixteen;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.ResourceLoader;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,6 +44,10 @@ public class ResourceManager {
             return null;
         }
     }
+
+	public static void loadAnimation(String animationName){
+
+	}
 
     public static void cleanAllResources(){
         // clean images

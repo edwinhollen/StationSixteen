@@ -1,0 +1,7 @@
+{
+  "character_human_walk_left":{
+    "frames": ["character_walk1.png", "character_walk2.png", "character_walk3.png", "character_walk4.png"],
+    "delay": 120,
+    "loop": true
+  }
+}

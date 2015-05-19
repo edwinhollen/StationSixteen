@@ -11,47 +11,52 @@ import java.util.stream.Collectors;
 public class ComponentEntitySystem implements Updateable, Renderable{
     private List<System> systems = new ArrayList<>();
 
-    private int lastEntitiesHashcode;
+    private boolean needsOrganized = false;
     private List<Entity> entities = new ArrayList<>();
     private Map<System, List<Entity>> organizedEntities = new HashMap<>();
 
 	public ComponentEntitySystem(){
-        lastEntitiesHashcode = entities.hashCode();
+
 	}
 
     public void addSystem(System system){
         systems.add(system);
+	    needsOrganized = true;
     }
 
     public void addEntity(Entity e){
         entities.add(e);
+	    needsOrganized = true;
     }
 
-	@Override
-	public void render(GameContainer gc, Graphics g) {
-		organizedEntities.entrySet().stream().forEach(entry -> {
-            if (entry.getKey() instanceof EntitiesRenderable)
-                ((EntitiesRenderable) entry.getKey()).render(entry.getValue(), gc, g);
-        });
-	}
 
 	@Override
 	public void update(GameContainer gc, int dt) {
-        if(entities.hashCode() != lastEntitiesHashcode){
-            // re-organize entities
-            organizedEntities.clear();
-            systems.forEach(system -> {
-                organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.getAcceptedComponents())).collect(Collectors.toCollection(ArrayList::new)));
-            });
-        }
+		if(needsOrganized){
+			// re-organize entities
+			java.lang.System.out.println("Organizing...");
+			organizedEntities.clear();
+			systems.forEach(system -> organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.getAcceptedComponents())).collect(Collectors.toCollection(ArrayList::new))));
+			needsOrganized = false;
+		}
+
+		organizedEntities.entrySet().parallelStream().forEach(entry -> {
+			entry.getKey().update(entry.getValue(), gc, dt);
+		});
+	}
+
+	@Override
+	public void render(GameContainer gc, Graphics g) {
+
 		organizedEntities.entrySet().stream().forEach(entry -> {
-            if (entry.getKey() instanceof EntitiesUpdateable)
-                ((EntitiesUpdateable) entry.getKey()).update(entry.getValue(), gc, dt);
-        });
+			entry.getKey().render(entry.getValue(), gc, g);
+		});
+
 	}
 
 
-	public static abstract class System{
+
+	public static abstract class System implements EntitiesUpdateable, EntitiesRenderable{
         private List<Class<? extends Component>> acceptedComponents;
 	    public System(){};
         protected System(List<Class<? extends Component>> acceptedComponents){

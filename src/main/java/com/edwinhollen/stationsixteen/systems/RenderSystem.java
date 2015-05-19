@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  * Created by Edwin on 5/19/2015.
  */
-public class RenderSystem extends ComponentEntitySystem.System implements EntitiesRenderable {
+public class RenderSystem extends ComponentEntitySystem.System {
     public RenderSystem(){
         super(Arrays.asList(
                 PositionComponent.class
@@ -39,8 +39,16 @@ public class RenderSystem extends ComponentEntitySystem.System implements Entiti
 
             if(Objects.isNull(imageToDraw)) return;
 
-            g.drawImage(imageToDraw, Math.round(pos.x), Math.round(pos.y));
+            try{
+	            g.drawImage(imageToDraw, Math.round(pos.x), Math.round(pos.y));
+            }catch(RuntimeException ignore){
 
+            }
         });
     }
+
+	@Override
+	public void update(List<ComponentEntitySystem.Entity> entities, GameContainer gc, int dt) {
+
+	}
 }

@@ -3,8 +3,8 @@ package com.edwinhollen.stationsixteen;
 import org.newdawn.slick.GameContainer;
 
 /**
- * Created by Edwin on 5/18/2015.
+ * Created by fubar on 5/18/15.
  */
 public interface Updateable {
-    void update(GameContainer gc, int dt);
+	void update(GameContainer gc, int dt);
 }

@@ -21,10 +21,11 @@ public class Game extends BasicGame {
     public final Path CONFIG_PATH = Paths.get(System.getProperty("user.home"), ".config/", "stationsixteen");
 
     private ConfigLoader.Config config;
+    private Scene currentScene;
 
     public Game() throws SlickException {
         super("A Slick2d game");
-        this.config = ConfigLoader.load(Paths.get(CONFIG_PATH.toString(), "config.json"), false);
+        this.config = ConfigLoader.load(Paths.get(CONFIG_PATH.toString(), "config.json"), true);
 
         AppGameContainer app = new AppGameContainer(this);
         app.setDisplayMode(config.resolutionX, config.resolutionY, config.fullscreen);
@@ -34,17 +35,17 @@ public class Game extends BasicGame {
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-
+        currentScene.render(container, g);
     }
 
     @Override
     public void init(GameContainer container) throws SlickException {
-
+        this.currentScene = new GameScene();
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-
+        currentScene.update(container, delta);
     }
 
 }

@@ -1,4 +1,6 @@
-package com.edwinhollen.stationsixteen;
+package com.edwinhollen.stationsixteen.components;
+
+import com.edwinhollen.stationsixteen.ComponentEntitySystem;
 
 /**
  * Created by fubar on 5/18/15.

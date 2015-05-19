@@ -28,9 +28,9 @@ public class ComponentEntitySystem implements Updateable, Renderable{
 	@Override
 	public void render(GameContainer gc, Graphics g) {
 		organizedEntities.entrySet().parallelStream().forEach(entry -> {
-			if (entry.getKey() instanceof EntitiesRenderable)
-				((EntitiesRenderable) entry.getKey()).render(entry.getValue(), gc, g);
-		});
+            if (entry.getKey() instanceof EntitiesRenderable)
+                ((EntitiesRenderable) entry.getKey()).render(entry.getValue(), gc, g);
+        });
 	}
 
 	@Override
@@ -42,8 +42,9 @@ public class ComponentEntitySystem implements Updateable, Renderable{
 		});
 
 		organizedEntities.entrySet().parallelStream().forEach(entry -> {
-			if(entry.getKey() instanceof EntitiesUpdateable) ((EntitiesUpdateable) entry.getKey()).update(entry.getValue(), gc, dt);
-		});
+            if (entry.getKey() instanceof EntitiesUpdateable)
+                ((EntitiesUpdateable) entry.getKey()).update(entry.getValue(), gc, dt);
+        });
 	}
 
 
@@ -68,6 +69,14 @@ public class ComponentEntitySystem implements Updateable, Renderable{
 
         public List<Component> getComponents(){
             return this.components;
+        }
+
+        public List<Component> getComponentsByClass(Class<? extends Component> requestedClass){
+            return this.components.parallelStream().filter(requestedClass::isInstance).collect(Collectors.toList());
+        }
+
+        public Component getComponentByClass(Class<? extends Component> requestedClass){
+            return this.getComponentsByClass(requestedClass).get(0);
         }
 
         public List<Class<? extends Component>> getComponentsAsClasses(){

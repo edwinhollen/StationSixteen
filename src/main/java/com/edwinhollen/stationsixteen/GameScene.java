@@ -1,9 +1,9 @@
 package com.edwinhollen.stationsixteen;
 
+import com.edwinhollen.stationsixteen.components.PhysicsComponent;
+import com.edwinhollen.stationsixteen.components.PositionComponent;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-
-import java.util.List;
 
 /**
  * Created by Edwin on 5/18/2015.
@@ -16,6 +16,7 @@ public class GameScene extends Scene {
 
 	    ComponentEntitySystem.Entity e = new ComponentEntitySystem.Entity();
 	    e.addComponent(new PhysicsComponent());
+        e.addComponent(new PositionComponent());
 
 	    ces.addEntity(e);
 

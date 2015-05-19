@@ -10,11 +10,13 @@ import java.util.stream.Collectors;
  */
 public class ComponentEntitySystem implements Updateable, Renderable{
     private List<System> systems = new ArrayList<>();
+
+    private int lastEntitiesHashcode;
     private List<Entity> entities = new ArrayList<>();
     private Map<System, List<Entity>> organizedEntities = new HashMap<>();
 
 	public ComponentEntitySystem(){
-
+        lastEntitiesHashcode = entities.hashCode();
 	}
 
     public void addSystem(System system){
@@ -35,12 +37,13 @@ public class ComponentEntitySystem implements Updateable, Renderable{
 
 	@Override
 	public void update(GameContainer gc, int dt) {
-
-		organizedEntities.clear();
-		systems.forEach(system -> {
-			organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.getAcceptedComponents())).collect(Collectors.toCollection(ArrayList::new)));
-		});
-
+        if(entities.hashCode() != lastEntitiesHashcode){
+            // re-organize entities
+            organizedEntities.clear();
+            systems.forEach(system -> {
+                organizedEntities.put(system, entities.parallelStream().filter(e -> e.getComponentsAsClasses().containsAll(system.getAcceptedComponents())).collect(Collectors.toCollection(ArrayList::new)));
+            });
+        }
 		organizedEntities.entrySet().parallelStream().forEach(entry -> {
             if (entry.getKey() instanceof EntitiesUpdateable)
                 ((EntitiesUpdateable) entry.getKey()).update(entry.getValue(), gc, dt);
